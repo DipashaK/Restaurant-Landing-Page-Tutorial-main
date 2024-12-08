@@ -135,6 +135,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AiOutlineEyeInvisible, AiOutlineEye } from 'react-icons/ai';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -149,6 +150,7 @@ const SignUp = () => {
     emailId: '',
     password: ''
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -157,13 +159,13 @@ const SignUp = () => {
     let error = '';
     switch (field) {
       case 'firstName':
-        if (!/^[A-Za-z]+$/.test(value)) {
-          error = 'First name should only contain alphabets.';
+        if (!/^[A-Za-z]+$/.test(value) || value.trim() === '') {
+          error = 'First name should only contain alphabets and cannot be empty.';
         }
         break;
       case 'lastName':
-        if (!/^[A-Za-z]+$/.test(value)) {
-          error = 'Last name should only contain alphabets.';
+        if (!/^[A-Za-z]+$/.test(value) || value.trim() === '') {
+          error = 'Last name should only contain alphabets and cannot be empty.';
         }
         break;
       case 'emailId':
@@ -172,7 +174,7 @@ const SignUp = () => {
         }
         break;
       case 'password':
-        if (!/(?=.[!@#$%^&])[A-Za-z0-9!@#$%^&*]{8,}/.test(value)) {
+        if (!/(?=.*[!@#$%^&])[A-Za-z0-9!@#$%^&*]{8,}/.test(value)) {
           error = 'Password must be at least 8 characters long and include a special character.';
         }
         break;
@@ -194,16 +196,16 @@ const SignUp = () => {
 
     // Validation
     const errors = {};
-    if (!/^[A-Za-z]+$/.test(firstName)) {
-      errors.firstName = 'First name should only contain alphabets.';
+    if (!/^[A-Za-z]+$/.test(firstName) || firstName.trim() === '') {
+      errors.firstName = 'First name should only contain alphabets and cannot be empty.';
     }
-    if (!/^[A-Za-z]+$/.test(lastName)) {
-      errors.lastName = 'Last name should only contain alphabets.';
+    if (!/^[A-Za-z]+$/.test(lastName) || lastName.trim() === '') {
+      errors.lastName = 'Last name should only contain alphabets and cannot be empty.';
     }
     if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(emailId)) {
-      errors.emailId = 'Email must have the the @gmail.com .';
+      errors.emailId = 'Email must be a valid Gmail address.';
     }
-    if (!/(?=.[!@#$%^&])[A-Za-z0-9!@#$%^&*]{8,}/.test(password)) {
+    if (!/(?=.*[!@#$%^&])[A-Za-z0-9!@#$%^&*]{8,}/.test(password)) {
       errors.password = 'Password must be at least 8 characters long and include a special character.';
     }
 
@@ -291,10 +293,10 @@ const SignUp = () => {
               <p className="text-sm text-red-500 mt-1">{formErrors.emailId}</p>
             )}
           </div>
-          <div className="mb-3">
+          <div className="mb-3 relative">
             <label className="block text-sm font-semibold text-gray-700 text-left mb-1">Password</label>
             <input
-              type="password"
+              type={passwordVisible ? 'text' : 'password'}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -307,6 +309,16 @@ const SignUp = () => {
             {formErrors.password && (
               <p className="text-sm text-red-500 mt-1">{formErrors.password}</p>
             )}
+            <div
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            >
+              {passwordVisible ? (
+                <AiOutlineEyeInvisible size={20} color="black" />
+              ) : (
+                <AiOutlineEye size={20} color="black" />
+              )}
+            </div>
           </div>
           <div className="mt-3">
             <button
@@ -330,3 +342,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
