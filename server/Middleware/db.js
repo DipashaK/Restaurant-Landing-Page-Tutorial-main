@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const username = "Dipasha";
+const username = "Aditi";
 const password = 'GuptaAditi_2112';
 const url = `mongodb+srv://${username}:${password}@cluster0.zrf1zde.mongodb.net/DonorUser?retryWrites=true&w=majority&appName=Cluster0`
 const connectDb = async () => {
