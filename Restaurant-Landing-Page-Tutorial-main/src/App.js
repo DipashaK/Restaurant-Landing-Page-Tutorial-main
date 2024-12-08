@@ -87,7 +87,7 @@ function App() {
   const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Track login status
 
-  const hideSidebarPaths = ["/login", "/signUp", "/"];
+  const hideSidebarPaths = ["/login", "/signUp", "/","signup"];
   const shouldShowSidebar = !hideSidebarPaths.includes(location.pathname);
 
   return (
